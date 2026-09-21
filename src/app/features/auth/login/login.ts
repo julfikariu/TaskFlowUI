@@ -67,9 +67,6 @@ export class Login {
         )
         .subscribe({
             next: (response) => {
-                console.log('Login successful:', response);
-
-                localStorage.setItem('accessToken', response.accessToken);
 
                 this.router.navigate(['/dashboard']);
             },
