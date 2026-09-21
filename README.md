@@ -1,59 +1,177 @@
-# TaskFlowUI
+# TaskFlow UI
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.17.
+TaskFlow UI is an Angular frontend application for the TaskFlow project.
 
-## Development server
+The project is being developed as a learning project to understand modern Angular architecture and real-world frontend integration with an ASP.NET Core Web API.
 
-To start a local development server, run:
+The backend API provides authentication and project/task management functionality.
 
-```bash
-ng serve
+## Tech Stack
+
+* Angular 21
+* TypeScript
+* Tailwind CSS
+* RxJS
+* Angular Router
+* Angular Reactive Forms
+* ASP.NET Core Web API
+* JWT Authentication
+
+## Project Goals
+
+The main purpose of this project is to learn Angular by building a real-world application rather than following isolated tutorials.
+
+The project will cover:
+
+* Angular standalone architecture
+* Feature-based project structure
+* Angular routing
+* Reactive Forms
+* Form validation
+* HTTP API integration
+* JWT authentication
+* HTTP Interceptors
+* Route Guards
+* Signals
+* Dashboard architecture
+* Projects CRUD
+* Tasks CRUD
+* Loading and error handling
+* Reusable components
+* Production-oriented frontend structure
+
+## Current Architecture
+
+```text
+src/app/
+│
+├── core/
+│   ├── guards/
+│   ├── interceptors/
+│   └── services/
+│
+├── shared/
+│   ├── components/
+│   └── models/
+│
+├── features/
+│   ├── auth/
+│   │   ├── login/
+│   │   └── register/
+│   │
+│   ├── dashboard/
+│   ├── projects/
+│   └── tasks/
+│
+├── app.ts
+├── app.html
+├── app.config.ts
+└── app.routes.ts
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Completed
 
-## Code scaffolding
+### Angular Project Setup
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+* Created Angular 21 application
+* Configured standalone Angular architecture
+* Configured Tailwind CSS
+* Verified Tailwind CSS integration
 
-```bash
-ng generate component component-name
+### Application Routing
+
+Implemented routes for:
+
+```text
+/login
+/register
+/dashboard
+/projects
+/tasks
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Authentication UI
 
-```bash
-ng generate --help
+Created the initial Login page with:
+
+* Email field
+* Password field
+* Reactive Form
+* Form validation
+* Required validation
+* Email validation
+* Minimum password length validation
+* Register navigation
+
+## Login Architecture
+
+The current login flow is intentionally separated into UI and service responsibilities.
+
+```text
+Login Component
+      │
+      │ Form Data
+      ▼
+Auth Service
+      │
+      │ HTTP Request
+      ▼
+ASP.NET Core API
+      │
+      ▼
+JWT
 ```
 
-## Building
+The API integration will be implemented in the next stage.
 
-To build the project run:
+## Development
 
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+Install dependencies:
 
 ```bash
-ng test
+npm install
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+Start the development server:
 
 ```bash
-ng e2e
+npm start
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Application:
 
-## Additional Resources
+```text
+http://localhost:4200
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Backend
+
+The frontend will communicate with the TaskFlow ASP.NET Core Web API.
+```
+https://github.com/julfikariu/TaskFlowAPI
+```
+
+The backend currently provides:
+
+* User Registration
+* User Login
+* JWT Authentication
+* Project APIs
+* Task APIs
+
+## Learning Approach
+
+This project follows a production-oriented architecture.
+
+The application is being developed feature by feature while focusing on:
+
+1. Separation of concerns
+2. Maintainability
+3. Reusability
+4. Type safety
+5. Proper Angular patterns
+6. API integration
+7. Authentication architecture
+8. Scalable project structure
+
+The goal is not only to make the application work, but also to understand why each architectural decision is made.

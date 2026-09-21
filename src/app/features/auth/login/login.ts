@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '@src/app/core/services/auth.service';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +14,15 @@ import { RouterLink } from '@angular/router';
   styleUrl: './login.css',
 })
 export class Login {
-    loginForm = new FormGroup({
+
+    private readonly router = inject(Router);
+    private readonly authService = inject(AuthService);
+
+    // UI state
+    readonly isSubmitting = signal(false);
+    readonly errorMessage = signal('');
+
+    readonly loginForm = new FormGroup({
         email: new FormControl('', {
             nonNullable: true,
             validators: [
@@ -32,5 +42,50 @@ export class Login {
 
     onSubmit(): void {
         console.log(this.loginForm.value);
+
+        // Reset error message
+        this.errorMessage.set('');
+
+        // If the form is invalid, mark all fields as touched to trigger validation messages
+        if (this.loginForm.invalid) {
+            this.loginForm.markAllAsTouched();
+            return;
+        }
+
+        // Set the submitting state to true to disable the form and show a loading indicator
+        this.isSubmitting.set(true);
+
+        const credentials = this.loginForm.getRawValue();
+
+        this.authService
+        .login(credentials)
+        .pipe(
+            finalize(() => {
+                console.log('Request finished');
+                this.isSubmitting.set(false);
+            })
+        )
+        .subscribe({
+            next: (response) => {
+                console.log('Login successful:', response);
+
+                localStorage.setItem('accessToken', response.accessToken);
+
+                this.router.navigate(['/dashboard']);
+            },
+            error: (error) => {
+                console.error('Login failed:', error);
+                
+                console.log('Error status:', error.status);
+                console.log('Error body:', error.error);
+
+                this.isSubmitting.set(false);
+
+                this.errorMessage.set(
+                    error?.error?.message ??
+                    'Unable to login. Please try again.'
+                );
+            }
+        });
     }
 }
