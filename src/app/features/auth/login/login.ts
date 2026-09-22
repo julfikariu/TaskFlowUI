@@ -61,21 +61,14 @@ export class Login {
         .login(credentials)
         .pipe(
             finalize(() => {
-                console.log('Request finished');
                 this.isSubmitting.set(false);
             })
         )
         .subscribe({
             next: (response) => {
-
                 this.router.navigate(['/dashboard']);
             },
             error: (error) => {
-                console.error('Login failed:', error);
-                
-                console.log('Error status:', error.status);
-                console.log('Error body:', error.error);
-
                 this.isSubmitting.set(false);
 
                 this.errorMessage.set(

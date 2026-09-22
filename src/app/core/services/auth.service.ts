@@ -21,7 +21,7 @@ export class AuthService {
     private readonly apiUrl = `${environment.apiUrl}/Auth`;
 
     readonly isAuthenticated = signal(
-        this.tokenStorage.hasToken()
+        this.hasValidToken()
     );
 
     login(credentials: LoginRequest): Observable<LoginResponse> {
@@ -48,5 +48,12 @@ export class AuthService {
 
     getToken(): string | null {
         return this.tokenStorage.getToken();
+    }
+
+    private hasValidToken(): boolean {
+        return (
+            this.tokenStorage.hasToken() &&
+            !this.tokenStorage.isTokenExpired()
+        );
     }
 }
