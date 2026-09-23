@@ -5,12 +5,14 @@ import { ProjectService } from '../services/project.service';
 import { Project } from '../models/project.model';
 import { DatePipe } from '@angular/common';
 import { ProjectForm } from '../project-form/project-form';
+import { ProjectDeleteDialog } from '../project-delete-dialog/project-delete-dialog';
 
 @Component({
     selector: 'app-project-list',
     imports: [
         DatePipe,
         ProjectForm,
+        ProjectDeleteDialog,
     ],
     templateUrl: './project-list.html',
     styleUrl: './project-list.css',
@@ -25,6 +27,7 @@ export class ProjectList implements OnInit {
     readonly showCreateForm = signal(false);
 
     readonly selectedProject = signal<Project | null>(null);
+    readonly showDeleteDialog = signal(false);
 
     ngOnInit(): void {
         this.loadProjects();
@@ -88,5 +91,20 @@ export class ProjectList implements OnInit {
     closeProjectForm(): void {
         this.showCreateForm.set(false);
         this.selectedProject.set(null);
+    }
+
+    openDeleteDialog(project: Project): void {
+        this.selectedProject.set(project);
+        this.showDeleteDialog.set(true);
+    }
+
+    closeDeleteDialog(): void {
+        this.showDeleteDialog.set(false);
+        this.selectedProject.set(null);
+    }
+    onProjectDeleted(): void {
+        this.closeDeleteDialog();
+
+        this.loadProjects();
     }
 }

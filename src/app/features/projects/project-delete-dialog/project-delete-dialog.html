@@ -1,0 +1,57 @@
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
+    <div class="w-full max-w-md rounded-2xl border border-slate-800 bg-slate-900 shadow-2xl">
+
+        <!-- Content -->
+        <div class="p-6">
+            <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-red-500/10 text-red-400">
+                <span class="text-xl">!</span>
+            </div>
+            <h2 class="text-xl font-semibold text-white">
+                Delete Project
+            </h2>
+
+            <p class="mt-2 text-sm leading-6 text-slate-400">
+                Are you sure you want to delete
+                <span class="font-semibold text-white">
+                    "{{ project().name }}"
+                </span>
+                ?
+            </p>
+
+            <p class="mt-2 text-sm text-red-400">
+                This action cannot be undone.
+            </p>
+
+            @if (errorMessage()) {
+            <div class="mt-5 rounded-lg border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-400">
+                {{ errorMessage() }}
+            </div>
+            }
+        </div>
+
+        <!-- Actions -->
+        <div class="flex justify-end gap-3 border-t border-slate-800 px-6 py-4">
+
+            <button type="button" (click)="cancel()" [disabled]="isDeleting()"
+                class="rounded-lg border border-slate-700 px-4 py-2.5 text-sm font-medium text-slate-300 hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50">
+                Cancel
+            </button>
+
+            <button type="button" (click)="confirmDelete()" [disabled]="isDeleting()"
+                class="rounded-lg bg-red-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-red-500 disabled:cursor-not-allowed disabled:opacity-60">
+
+                @if (isDeleting()) {
+
+                <span class="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
+
+                Deleting...
+
+                } @else {
+
+                Delete Project
+
+                }
+            </button>
+        </div>
+    </div>
+</div>
