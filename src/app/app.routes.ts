@@ -17,9 +17,10 @@ export const routes: Routes = [
     {
         path: '',
         component: Home,
+        pathMatch: 'full', // This ensures that the Home component is only loaded when the path is exactly empty
     },
     {
-        path: '',
+        path: '', // This is the base path for authenticated routes
         canActivate: [authGuard],
         loadComponent: () => import('./layouts/authenticated/authenticated-layout/authenticated-layout').then(m => m.AuthenticatedLayout),
         children: [
@@ -29,7 +30,7 @@ export const routes: Routes = [
             },
             {
                 path: 'projects',
-                loadComponent: () => import('./features/projects/projects').then(m => m.Projects),
+                loadComponent: () => import('./features/projects/project-list/project-list').then(m => m.ProjectList),
             },
             {
                 path: 'tasks',
@@ -38,7 +39,7 @@ export const routes: Routes = [
         ]
     },
     {
-        path: '**',
+        path: '**', 
         redirectTo: '',
     }
 ];
