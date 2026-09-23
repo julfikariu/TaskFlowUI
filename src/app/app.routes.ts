@@ -15,12 +15,30 @@ export const routes: Routes = [
         component: Register,
     },
     {
-        path: 'dashboard',
-        canActivate: [authGuard],
-        loadComponent: () => import('./features/dashboard/dashboard').then(m => m.Dashboard),
+        path: '',
+        component: Home,
     },
     {
         path: '',
-        component: Home,
+        canActivate: [authGuard],
+        loadComponent: () => import('./layouts/authenticated/authenticated-layout/authenticated-layout').then(m => m.AuthenticatedLayout),
+        children: [
+            {
+                path: 'dashboard',
+                loadComponent: () => import('./features/dashboard/dashboard').then(m => m.Dashboard),
+            },
+            {
+                path: 'projects',
+                loadComponent: () => import('./features/projects/projects').then(m => m.Projects),
+            },
+            {
+                path: 'tasks',
+                loadComponent: () => import('./features/tasks/tasks').then(m => m.Tasks),
+            }
+        ]
+    },
+    {
+        path: '**',
+        redirectTo: '',
     }
 ];
