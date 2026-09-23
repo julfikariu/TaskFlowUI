@@ -11,6 +11,7 @@
             </p>
         </div>
         <button type="button"
+            (click)="openCreateForm()"
             class="rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-500">
             + New Project
         </button>
@@ -103,9 +104,12 @@
                             </span>
                         </td>
 
-                        <td class="px-6 py-4">
+                        <td class="px-6 py-4 flex gap-2">
                             <button type="button" class="text-sm font-medium text-indigo-400 hover:text-indigo-300">
                                 View
+                            </button>
+                            <button type="button" (click)="openEditForm(project)" class="text-sm font-medium text-indigo-400 hover:text-indigo-300">
+                                Edit
                             </button>
                         </td>
                     </tr>
@@ -116,3 +120,10 @@
     </div>
     }
 </div>
+@if (showCreateForm()) {
+  <app-project-form
+    [project]="selectedProject()"
+    (closed)="closeProjectForm()"
+    (projectSaved)="onProjectSaved()"
+  />
+}

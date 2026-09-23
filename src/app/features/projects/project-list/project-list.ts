@@ -4,11 +4,13 @@ import { finalize } from 'rxjs';
 import { ProjectService } from '../services/project.service';
 import { Project } from '../models/project.model';
 import { DatePipe } from '@angular/common';
+import { ProjectForm } from '../project-form/project-form';
 
 @Component({
     selector: 'app-project-list',
     imports: [
-        DatePipe
+        DatePipe,
+        ProjectForm,
     ],
     templateUrl: './project-list.html',
     styleUrl: './project-list.css',
@@ -20,6 +22,9 @@ export class ProjectList implements OnInit {
     readonly projects = signal<Project[]>([]);
     readonly isLoading = signal(false);
     readonly errorMessage = signal('');
+    readonly showCreateForm = signal(false);
+
+    readonly selectedProject = signal<Project | null>(null);
 
     ngOnInit(): void {
         this.loadProjects();
@@ -53,5 +58,35 @@ export class ProjectList implements OnInit {
                     );
                 },
             });
+    }
+
+    openCreateForm(): void {
+        this.selectedProject.set(null);
+        this.showCreateForm.set(true);
+    }
+
+    closeCreateForm(): void {
+        this.showCreateForm.set(false);
+        this.selectedProject.set(null);
+    }
+
+    onProjectCreated(): void {
+        this.showCreateForm.set(false);
+
+        this.loadProjects();
+    }
+
+    openEditForm(project: Project): void {
+        this.selectedProject.set(project);
+        this.showCreateForm.set(true);
+    }
+    onProjectSaved(): void {
+        this.closeProjectForm();
+        this.loadProjects();
+    }
+
+    closeProjectForm(): void {
+        this.showCreateForm.set(false);
+        this.selectedProject.set(null);
     }
 }
