@@ -35,7 +35,7 @@
             <button type="button" (click)="cancel()" [disabled]="isDeleting()"
                 class="rounded-lg border border-slate-700 px-4 py-2.5 text-sm font-medium text-slate-300 hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50">
                 Cancel
-            </button>
+        </button>
 
             <button type="button" (click)="confirmDelete()" [disabled]="isDeleting()"
                 class="rounded-lg bg-red-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-red-500 disabled:cursor-not-allowed disabled:opacity-60">
@@ -43,13 +43,9 @@
                 @if (isDeleting()) {
 
                 <span class="mr-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
-
                 Deleting...
-
                 } @else {
-
                 Delete Project
-
                 }
             </button>
         </div>

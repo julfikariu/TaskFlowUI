@@ -34,7 +34,7 @@ export const routes: Routes = [
             },
             {
                 path: 'tasks',
-                loadComponent: () => import('./features/tasks/tasks').then(m => m.Tasks),
+                loadComponent: () => import('./features/tasks/task-list/task-list').then(m => m.TaskList),
             }
         ]
     },
