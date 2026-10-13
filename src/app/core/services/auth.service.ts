@@ -8,6 +8,7 @@ import {
   LoginResponse,
 } from '@src/app/shared/models/auth.model';
 import { TokenStorageService } from '@src/app/core/services/token-storage.service';
+import { RegisterRequest } from '@src/app/features/auth/models/register-request.model';
 
 @Injectable({
   providedIn: 'root',
@@ -54,6 +55,13 @@ export class AuthService {
         return (
             this.tokenStorage.hasToken() &&
             !this.tokenStorage.isTokenExpired()
+        );
+    }
+
+    register(request: RegisterRequest): Observable<unknown> {
+        return this.http.post(
+            `${this.apiUrl}/register`,
+            request
         );
     }
 }
